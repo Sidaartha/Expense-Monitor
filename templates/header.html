@@ -4,7 +4,9 @@
 	<meta charset="utf-8">
 	<title>Expense Monitor</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
@@ -21,19 +23,41 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" rel="home" href="/" title="Expense Monitor ">
-        	<img style="margin-top: -7px;" height="35" src="{{ url_for('static', filename='images/EM_textlong.png') }}">
+        	<img style="margin-top: -7px; display:inline;" height="35" src="{{ url_for('static', filename='images/EMtextlong.png') }}"><b style="display:inline; font-size: 9px; color: #b5b5b5; position: relative; bottom: 2px;">[BETA]</b>
     	  </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" style="margin-left: -6px;">
           	{% if session.logged_in %}
             <li class="dropdown" >
-              <a href="#" class="dropdown-toggle" style="color: #337ab7;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class=" glyphicon glyphicon-user"></span > {{session.username}} <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" style="color: #337ab7; " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                
+                    <!-- <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Sid.jpeg') }}"> -->
+                
+                    <span style="padding: 5px; font-size: 13px; border-radius: 50%; background-color: #337ab7; color: white;" class="glyphicon glyphicon-user"></span>
+                
+                &nbsp;{{session.username | CAP}} <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li ><a href="/user/{{session.username}}/">Profile</a></li>
-                <li><a href="#">Another</a></li>
-                <li><a href="/logout/" style="color: #d43f3a;"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li ><a href="/user/{{session.username}}/"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;My Account</a></li>
+                {% if session.mode == 'dark' %}
+                    <li><a href="/LightMode/"><span class="glyphicon glyphicon-adjust"></span>&nbsp;&nbsp;Light/Dark
+                {% else %}
+                    <li><a href="/DarkMode/"><span class="glyphicon glyphicon-adjust"></span>&nbsp;&nbsp;Light/Dark
+                {% endif %}
+                    <label class="switch" style="position: relative; top: 8px; left: 14px;">
+                        {% if session.mode == 'dark' %}
+                            <input type="checkbox" checked>
+                        {% else %}
+                            <input type="checkbox">
+                        {% endif %}
+                      <span class="slider round"></span>
+                    </label>
+                    <p style="font-size: 6px; padding: 0px; margin: 0px; margin-left: 22px;">Comming Soon!</p></a></li>
+                <li><a href="/user/change-password/"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Change Password</a></li>
+                <li><a href="/user/switch/"><span class="glyphicon glyphicon-sort" style="transform: rotate(90deg);"></span>&nbsp;&nbsp;Switch Account</a></li>
+                <hr style="margin-bottom: 4px; margin-top: 4px;">
+                <li><a href="/logout/" style="color: #d43f3a;"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Sign Out</a></li>
               </ul>
             </li>
             {% else %}
@@ -48,8 +72,11 @@
 </header>
 
 
-
-<body>
+{% if session.mode == 'dark' %}
+    <body style="background-color: #20262e;">
+{% else %}
+    <body>
+{% endif %}
 
 	<div class="border-row" style="width:100%; margin-bottom: 15px;"> </div>
 	<!-- Flashed messages and actual body content -->
@@ -87,6 +114,22 @@
 	
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript">
+        $('a[data-toggle="tab"]').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
+            var id = $(e.target).attr("href");
+            localStorage.setItem('selectedTab', id)
+        });
+
+        var selectedTab = localStorage.getItem('selectedTab');
+        if (selectedTab != null) {
+            $('a[data-toggle="tab"][href="' + selectedTab + '"]').tab('show');
+        }
+    </script>
 </body>
 	
 
