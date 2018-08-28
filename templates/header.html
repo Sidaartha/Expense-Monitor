@@ -22,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" rel="home" href="/" title="Expense Monitor ">
+          <a class="navbar-brand" rel="home" href="/" title="Expense Monitor">
         	<img style="margin-top: -7px; display:inline;" height="35" src="{{ url_for('static', filename='images/EMtextlong.png') }}"><b style="display:inline; font-size: 9px; color: #b5b5b5; position: relative; bottom: 2px;">[BETA]</b>
     	  </a>
         </div>
@@ -32,11 +32,15 @@
           	{% if session.logged_in %}
             <li class="dropdown" >
               <a href="#" class="dropdown-toggle" style="color: #337ab7; " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                
-                    <!-- <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Sid.jpeg') }}"> -->
-                
+                {% if session.username == 'sidaartha' %}
+                    <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Sid.jpeg') }}">
+                {% elif session.sex == 'Male' %}
+                    <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Avatar-m.jpg') }}">
+                {% elif session.sex == 'Female' %}
+                    <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Avatar-f.jpg') }}">
+                {% else %}
                     <span style="padding: 5px; font-size: 13px; border-radius: 50%; background-color: #337ab7; color: white;" class="glyphicon glyphicon-user"></span>
-                
+                {% endif %}
                 &nbsp;{{session.username | CAP}} <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li ><a href="/user/{{session.username}}/"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;My Account</a></li>

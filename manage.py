@@ -5,6 +5,7 @@ from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from MySQLdb import escape_string as thwart
 from flask_mail import Mail, Message
+import datetime
 import gc
 from wtforms.fields.html5 import EmailField
 
@@ -16,7 +17,8 @@ def homepage():
 	if session.get('logged_in') == True:
 		return redirect(url_for('dashboard'))
 	else:
-		return render_template("main.html")
+		# return render_template("main.html")
+		return redirect(url_for('login_page'))
 
 @app.route('/Terms/')
 def terms():
@@ -115,6 +117,65 @@ def dashboard():
 		# c.execute("SELECT date, amount, val, mode, activity, total, pid FROM passbook WHERE uid = (%s) ORDER BY pid DESC LIMIT 10", (session.get('uid'),))
 		# passbook = c.fetchall()
 
+		# print(Date_all[0][0].strftime("%d-%m-%y"), type(Date_all[0][0].strftime("%d-%m-%y")))
+		def Date_valid(Date_all):
+			Date_list = []
+			count_d = 1
+			for i in range(len(Date_all)):
+				if count_d > 15:
+					print(i)
+					del Date_all[i-1:]
+					del Date_list[-1]
+					break
+				Date_all[i][0] = Date_all[i][0].strftime("%d-%m-%y")
+				Date_list.append(Date_all[i][0])
+				if len(Date_list) >= 2:
+					if Date_list[-1] != Date_list[-2]:
+						count_d+=1
+			Set_date = list(set(Date_list))
+			Set_date = sorted(Set_date, key=lambda x: datetime.datetime.strptime(x, '%d-%m-%y'))
+			Set_date.reverse()
+			Set_amu = []
+			for i in range(len(Set_date)):
+				day_sum = 0
+				for e in range(len(Date_all)):
+					if Date_all[e][0] == Set_date[i]:
+						day_sum += Date_all[e][1]
+				Set_amu.append(day_sum)
+			Max_amu = max(Set_amu)
+			len_list = len(Set_date)
+			return Set_date , Set_amu , Max_amu , len_list 
+
+
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode != 'Person' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		Date_all_a = c.fetchall()
+		if len(Date_all_a) != 0:
+			Date_all_a = [list(i) for i in Date_all_a]
+			Set_date_a , Set_amu_a , Max_amu_a , len_list_a = Date_valid(Date_all_a)
+		else : Set_date_a , Set_amu_a , Max_amu_a , len_list_a = 0, 0, 0, 0
+
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Cash' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		Date_all_c = c.fetchall()
+		if len(Date_all_c) != 0:
+			Date_all_c = [list(i) for i in Date_all_c]
+			Set_date_c , Set_amu_c , Max_amu_c , len_list_c = Date_valid(Date_all_c)
+		else : Set_date_c , Set_amu_c , Max_amu_c , len_list_c = 0, 0, 0, 0
+
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Bank' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		Date_all_b = c.fetchall()
+		if len(Date_all_b) != 0:
+			Date_all_b = [list(i) for i in Date_all_b]
+			Set_date_b , Set_amu_b , Max_amu_b , len_list_b = Date_valid(Date_all_b)
+		else : Set_date_b , Set_amu_b , Max_amu_b , len_list_b = 0, 0, 0, 0
+
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Paytm' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		Date_all_p = c.fetchall()
+		if len(Date_all_p) != 0:
+			Date_all_p = [list(i) for i in Date_all_p]
+			Set_date_p , Set_amu_p , Max_amu_p , len_list_p = Date_valid(Date_all_p)
+		else : Set_date_p , Set_amu_p , Max_amu_p , len_list_p = 0, 0, 0, 0
+
+
 		if request.method == "POST":
 			def val_validator(input_amount):
 				if input_amount[0] == '-':
@@ -141,19 +202,19 @@ def dashboard():
 			elif 'cash' in request.form:
 				value, amount_val = val_validator(request.form['cash'])
 				c.execute("""UPDATE users SET cash = cash + %s WHERE username = %s""",(request.form['cash'], thwart(session.get('username'))))
-				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Cash', 'updated', wallets[0]))
+				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Cash', 'Updated', wallets[0]))
 			elif 'bank' in request.form:
 				value, amount_val = val_validator(request.form['bank'])
 				c.execute("""UPDATE users SET bank = bank + %s WHERE username = %s""",(request.form['bank'], thwart(session.get('username'))))
-				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Bank', 'updated', wallets[1]))
+				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Bank', 'Updated', wallets[1]))
 			elif 'paytm' in request.form:
 				value, amount_val = val_validator(request.form['paytm'])
 				c.execute("""UPDATE users SET paytm = paytm + %s WHERE username = %s""",(request.form['paytm'], thwart(session.get('username'))))
-				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Paytm', 'updated', wallets[2]))
+				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Paytm', 'Updated', wallets[2]))
 			elif 'amazon' in request.form:
 				value, amount_val = val_validator(request.form['amazon'])
 				c.execute("""UPDATE users SET amazon = amazon + %s WHERE username = %s""",(request.form['amazon'], thwart(session.get('username'))))
-				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Amazon', 'updated', wallets[3]))
+				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Amazon', 'Updated', wallets[3]))
 			elif 'filter' in request.form:
 				value = int(request.form['filter'])
 				if value < 0 : value = 10
@@ -239,7 +300,7 @@ def dashboard():
 			return redirect(url_for('dashboard'))
 
 		gc.collect()
-		return render_template("dashboard.html", wallets = wallets, passbook = passbook, passbook_o = passbook_o)
+		return render_template("dashboard.html", wallets = wallets, passbook = passbook, passbook_o = passbook_o, Set_date_a = Set_date_a, Set_amu_a = Set_amu_a, Max_amu_a = Max_amu_a, len_list_a = len_list_a, Set_date_c = Set_date_c, Set_amu_c = Set_amu_c, Max_amu_c = Max_amu_c, len_list_c = len_list_c, Set_date_b = Set_date_b, Set_amu_b = Set_amu_b, Max_amu_b = Max_amu_b, len_list_b = len_list_b, Set_date_p = Set_date_p, Set_amu_p = Set_amu_p, Max_amu_p = Max_amu_p, len_list_p = len_list_p)
 	except Exception as e:
 		return(str(e))
 
@@ -252,11 +313,39 @@ def logout():
 	gc.collect()
 	return redirect(url_for('homepage'))
 
-@app.route('/user/<name_user>/')
+@app.route('/user/<name_user>/', methods=["GET","POST"])
 @login_required
 def user(name_user):
 	if session.get('username') == name_user:
-		return render_template("user.html")
+		c, conn = connection()
+		c.execute("SELECT username , full_name, sex, img, email, phone, cash, bank, paytm, amazon, owe_in, owe_out FROM users WHERE username = (%s)", (thwart(session.get('username')),))
+		info = c.fetchone()
+
+		if request.method == "POST":
+			if 'name' in request.form:
+				fname = request.form['name'].title()
+				c.execute("UPDATE users SET full_name = %s WHERE username = %s", (fname, thwart(session.get('username'))))
+			if 'number' in request.form:
+				numb = request.form['number']
+				if len(numb) ==10 : 
+					c.execute("UPDATE users SET phone = %s WHERE username = %s", (numb, thwart(session.get('username'))))
+				else :
+					flash('Enter a valid phone number!')
+			if 'sex' in request.form:
+				gen = request.form.get('comp_select')
+				c.execute("UPDATE users SET sex = %s WHERE username = %s", (gen, thwart(session.get('username'))))
+			conn.commit()
+			c.close()
+			conn.close()
+			return redirect('/user/'+session.get('username'))
+		else:
+			pass
+
+		conn.commit()
+		c.close()
+		conn.close()
+		return render_template("user.html", info=info)
+		gc.collect()
 	else:
 		return render_template("404.html")
 
@@ -277,17 +366,19 @@ def login_page():
 		c, conn = connection()
 		if request.method == "POST":
 
-			data = c.execute("SELECT * FROM users WHERE username = (%s)",
+			data = c.execute("SELECT uid, username, password, sex FROM users WHERE username = (%s)",
 							 (thwart(request.form['username']),))
 			
 			data_all = c.fetchone()
 			data_uid = data_all[0]
+			data_sex = data_all[3]
 			data = data_all[2]
 
 			if sha256_crypt.verify(request.form['password'], data):
 				session['logged_in'] = True
 				session['username'] = request.form['username']
 				session['uid'] = data_uid
+				session['sex'] = data_sex
 
 				flash("You are now logged in")
 				return redirect(url_for("dashboard"))
@@ -300,8 +391,8 @@ def login_page():
 		return render_template("login.html", error=error)
 
 	except Exception as e:
-		#flash(e)
-		error = "Invalid credentials, try again."
+		flash(e)
+		error = "Invalid credentials, try again!"
 		return render_template("login.html", error = error)
 
 class RegistrationForm(Form):
@@ -321,7 +412,7 @@ def change_password():
 		error = None
 		if request.method == 'POST':
 
-			data = c.execute("SELECT * FROM users WHERE username = (%s)",
+			data = c.execute("SELECT uid, username, password FROM users WHERE username = (%s)",
 					(thwart(session.get('username')),))
 			data = c.fetchone()[2]
 
@@ -419,6 +510,10 @@ def cap(val):
 @app.template_filter('timestamp_f')
 def ts(val):
 	return val.strftime("%d %b %y, %I:%M %p")
+@app.template_filter('datetime')
+def dt(val):
+	val_n = datetime.datetime.strptime(val, '%d-%m-%y')
+	return val_n.strftime("%d %b %y")
 
 if __name__ == "__main__":
 	app.run()
