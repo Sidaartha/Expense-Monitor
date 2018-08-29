@@ -119,11 +119,18 @@ def dashboard():
 
 		# print(Date_all[0][0].strftime("%d-%m-%y"), type(Date_all[0][0].strftime("%d-%m-%y")))
 		def Date_valid(Date_all):
+
+			start = datetime.datetime.now()
+			z_dates = []
+			z_dates.append(start.strftime('%d-%m-%y'))
+			for i in range(29): 
+				start -= datetime.timedelta(days=1)
+				z_dates.append(start.strftime('%d-%m-%y'))
+
 			Date_list = []
 			count_d = 1
 			for i in range(len(Date_all)):
-				if count_d > 15:
-					print(i)
+				if count_d > 30:
 					del Date_all[i-1:]
 					del Date_list[-1]
 					break
@@ -142,10 +149,20 @@ def dashboard():
 					if Date_all[e][0] == Set_date[i]:
 						day_sum += Date_all[e][1]
 				Set_amu.append(day_sum)
+
+			for i in range(len(z_dates)):
+				if i >= len(Set_date) :
+					Set_date.insert(i, z_dates[i])
+					Set_amu.insert(i, 0)
+				else:
+					if z_dates[i] != Set_date[i]:
+						Set_date.insert(i, z_dates[i])
+						Set_amu.insert(i, 0)
+
 			Max_amu = max(Set_amu)
 			len_list = len(Set_date)
-			return Set_date , Set_amu , Max_amu , len_list 
 
+			return Set_date , Set_amu , Max_amu , len_list 
 
 		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode != 'Person' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
 		Date_all_a = c.fetchall()
@@ -174,7 +191,6 @@ def dashboard():
 			Date_all_p = [list(i) for i in Date_all_p]
 			Set_date_p , Set_amu_p , Max_amu_p , len_list_p = Date_valid(Date_all_p)
 		else : Set_date_p , Set_amu_p , Max_amu_p , len_list_p = 0, 0, 0, 0
-
 
 		if request.method == "POST":
 			def val_validator(input_amount):

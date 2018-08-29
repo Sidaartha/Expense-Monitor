@@ -242,11 +242,11 @@ input:checked + .slider:before {
 }
 
 .progress-bar-vertical-n {
-  width: 20px;
+  width: 9px;
   min-height: 100px;
   display: flex;
   align-items: flex-end;
-  margin-right: 20px;
+  margin-right: 8px;
   float: left;
 }
 
@@ -264,3 +264,9 @@ input:checked + .slider:before {
   box-shadow: none;
 }
 
+@media (max-width: 767px) {
+	.progress-bar-vertical-n{
+		width: 7.4px;
+		margin-right: 7px;
+	}
+}
