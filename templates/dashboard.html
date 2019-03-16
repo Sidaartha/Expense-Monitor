@@ -46,10 +46,10 @@
     <div role="tabpanel">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist" id="myTab">
-        <li role="presentation" class="active col-xs-3 col-sm-3 text-center" style="padding: 0px;"><a href="#Wallets" aria-controls="Wallets" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-briefcase"></span>&nbsp; Wallets</a></li>
+        <li role="presentation" class=" col-xs-3 col-sm-3 text-center" style="padding: 0px;"><a href="#Wallets" aria-controls="Wallets" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-briefcase"></span>&nbsp; Wallets</a></li>
         <li role="presentation" class="col-xs-3 col-sm-3 text-center" style="padding: 0px;"><a href="#Passbook" aria-controls="Passbook" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Passbook</a></li>
         <li role="presentation" class="col-xs-3 col-sm-3 text-center" style="padding: 0px;"><a href="#U-r-Owed" aria-controls="U-r-Owed" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-collapse-down"></span>&nbsp; Owe in</a></li>
-        <li role="presentation" class="col-xs-3 col-sm-3 text-center" style="padding: 0px;"><a href="#U-Owe" aria-controls="U-Owe" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-collapse-up"></span>&nbsp; Owe out</a></li>
+        <li role="presentation" class="col-xs-3 col-sm-3 text-center" style="padding: 0px;"><a href="#U-Owe" aria-controls="U-Owe" role="tab" data-toggle="tab"><span class="active glyphicon glyphicon-collapse-up"></span>&nbsp; Owe out</a></li>
       </ul>
 
     <div class="tab-content" style="margin-left: -15px; margin-right: -15px;">
@@ -123,7 +123,7 @@
 
                 <div style="margin-top: 20px;" role="tabpanel" class="tab-pane fade in active" id="Activity">
                   {% if Max_amu_a != 0 %}
-                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_a[-1] | datetime}}</b> - <b style="font-weight: 500; color: grey;">{{Set_date_a[0] | datetime}}</b></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">{{Max_amu_a | INR_f}}</h6>
+                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_a[-1] | datetime}} - {{Set_date_a[0] | datetime}}&nbsp;&nbsp;&nbsp;</b><span class="badge badge-pill badge-primary" style="background-color: #337ab7; font-weight: 450;">{{ Set_amu_a | sum  | INR_only }}</span></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">&nbsp;{{Max_amu_a | INR_f}}&nbsp;</h6>
                     <hr style="margin: 0px; border-color: grey; border-style: dashed; opacity: 0.3;">
                     {% for i in range(len_list_a) %}
                       {% if Set_amu_a[i] == 0 %}
@@ -149,7 +149,7 @@
                 </div>
                 <div style="margin-top: 20px;" role="tabpanel" class="tab-pane fade" id="Cash">
                   {% if Max_amu_c != 0 %}
-                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Cash based expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_c[-1] | datetime}}</b> - <b style="font-weight: 500; color: grey;">{{Set_date_c[0] | datetime}}</b></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">{{Max_amu_c | INR_f}}</h6>
+                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Cash expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_c[-1] | datetime}} - {{Set_date_c[0] | datetime}}&nbsp;&nbsp;&nbsp;</b><span class="badge badge-pill badge-primary" style="background-color: #337ab7; font-weight: 450;">{{ Set_amu_c | sum  | INR_only }}</span></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">{{Max_amu_c | INR_f}}</h6>
                     <hr style="margin: 0px; border-color: grey; border-style: dashed; opacity: 0.3;">
                     {% for i in range(len_list_c) %}
                       {% if Set_amu_c[i] == 0 %}
@@ -169,12 +169,12 @@
                       {% endif %}
                     {% endfor %}
                   {% else %}
-                    <h5>No Cash based bills!</h5>
+                    <h5>No Cash bills!</h5>
                   {% endif %}
                 </div>
                 <div style="margin-top: 20px;" role="tabpanel" class="tab-pane fade" id="Bank">
                   {% if Max_amu_b != 0 %}
-                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Bank based expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_b[-1] | datetime}}</b> - <b style="font-weight: 500; color: grey;">{{Set_date_b[0] | datetime}}</b></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">{{Max_amu_b | INR_f}}</h6>
+                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Bank expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_b[-1] | datetime}} - {{Set_date_b[0] | datetime}}&nbsp;&nbsp;&nbsp;</b><span class="badge badge-pill badge-primary" style="background-color: #337ab7; font-weight: 450;">{{ Set_amu_b | sum  | INR_only }}</span></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">{{Max_amu_b | INR_f}}</h6>
                     <hr style="margin: 0px; border-color: grey; border-style: dashed; opacity: 0.3;">
                       {% for i in range(len_list_b) %}
                         {% if Set_amu_b[i] == 0 %}
@@ -194,12 +194,12 @@
                         {% endif %}
                       {% endfor %}
                   {% else %}
-                    <h5>No Bank based bills!</h5>
+                    <h5>No Bank bills!</h5>
                   {% endif %}
                 </div>
                 <div style="margin-top: 20px;" role="tabpanel" class="tab-pane fade" id="Paytm">
                   {% if Max_amu_p != 0 %}
-                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Paytm based expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_p[-1] | datetime}}</b> - <b style="font-weight: 500; color: grey;">{{Set_date_p[0] | datetime}}</b></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">{{Max_amu_p | INR_f}}</h6>
+                    <h5 style="margin-top: 10px; margin-left: 0px; margin-bottom: 40px; font-weight: 500;">Paytm expenditure between&nbsp;&nbsp;<b style="font-weight: 500; color: grey;">{{Set_date_p[-1] | datetime}} - {{Set_date_p[0] | datetime}}&nbsp;&nbsp;&nbsp;</b><span class="badge badge-pill badge-primary" style="background-color: #337ab7; font-weight: 450;">{{ Set_amu_p | sum  | INR_only }}</span></h5><h6 style="text-align: right; margin-bottom: 5px; color: grey;">{{Max_amu_p | INR_f}}</h6>
                     <hr style="margin: 0px; border-color: grey; border-style: dashed; opacity: 0.3;">
                     {% for i in range(len_list_p) %}
                       {% if Set_amu_p[i] == 0 %}
@@ -219,7 +219,7 @@
                       {% endif %}
                     {% endfor %}
                   {% else %}
-                    <h5>No Paytm based bills!</h5>
+                    <h5>No Paytm bills!</h5>
                   {% endif %}
                 </div>
 <!--                 <div style="margin-top: 20px;" role="tabpanel" class="tab-pane fade" id="Amazon">

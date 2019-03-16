@@ -159,33 +159,33 @@ def dashboard():
 						Set_date.insert(i, z_dates[i])
 						Set_amu.insert(i, 0)
 
-			Max_amu = max(Set_amu)
-			len_list = len(Set_date)
+			Max_amu = max(Set_amu[0:30])
+			len_list = len(Set_date[0:30])
 
-			return Set_date , Set_amu , Max_amu , len_list 
+			return Set_date[0:30] , Set_amu[0:30] , Max_amu , len_list 
 
-		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode != 'Person' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode != 'Person' AND activity != 'Updated' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
 		Date_all_a = c.fetchall()
 		if len(Date_all_a) != 0:
 			Date_all_a = [list(i) for i in Date_all_a]
 			Set_date_a , Set_amu_a , Max_amu_a , len_list_a = Date_valid(Date_all_a)
 		else : Set_date_a , Set_amu_a , Max_amu_a , len_list_a = 0, 0, 0, 0
 
-		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Cash' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Cash' AND activity != 'Updated' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
 		Date_all_c = c.fetchall()
 		if len(Date_all_c) != 0:
 			Date_all_c = [list(i) for i in Date_all_c]
 			Set_date_c , Set_amu_c , Max_amu_c , len_list_c = Date_valid(Date_all_c)
 		else : Set_date_c , Set_amu_c , Max_amu_c , len_list_c = 0, 0, 0, 0
 
-		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Bank' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Bank' AND activity != 'Updated' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
 		Date_all_b = c.fetchall()
 		if len(Date_all_b) != 0:
 			Date_all_b = [list(i) for i in Date_all_b]
 			Set_date_b , Set_amu_b , Max_amu_b , len_list_b = Date_valid(Date_all_b)
 		else : Set_date_b , Set_amu_b , Max_amu_b , len_list_b = 0, 0, 0, 0
 
-		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Paytm' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
+		c.execute("SELECT date, amount FROM passbook WHERE uid = (%s) AND mode = 'Paytm' AND activity != 'Updated' AND val = 1 ORDER BY pid DESC ", (session.get('uid'),))
 		Date_all_p = c.fetchall()
 		if len(Date_all_p) != 0:
 			Date_all_p = [list(i) for i in Date_all_p]
@@ -517,6 +517,9 @@ def currency(val):
 @app.template_filter('INR_f')
 def currency(val):
 	return "₹{:,}".format(val)
+@app.template_filter('INR_only')
+def currency(val):
+	return "{:,}/-".format(val)
 @app.template_filter('ABS')
 def abs(val):
 	return str(val)[1:]
@@ -532,5 +535,5 @@ def dt(val):
 	return val_n.strftime("%d %b %y")
 
 if __name__ == "__main__":
-	app.run()
-	# app.run(debug=True,host='0.0.0.0')
+	app.run(host='0.0.0.0')
+	# app.run(debug=True,host='192.168.2.1')
