@@ -2,7 +2,7 @@ import MySQLdb
 
 # mysql --user=root -p
 def connection():
-    conn = MySQLdb.connect(	host="db4free.net", 	# your host, usually localhost
+    conn = MySQLdb.connect(	host="https://db4free.net", 	# your host, usually localhost
                      		user="expenseadmin", 		# your username
                      		passwd="abcd1234", 		# your password
                      		db="expensemonitor" ) 		# name of the data base
@@ -10,7 +10,7 @@ def connection():
 
     return c, conn
 
-# mysql --user=root -p
+# # mysql --user=root -p
 # def connection():
 #     conn = MySQLdb.connect(	host="localhost", 	# your host, usually localhost
 #                      		user="root", 		# your username
