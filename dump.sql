@@ -16,6 +16,66 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `passbook`
+--
+
+DROP TABLE IF EXISTS `passbook`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `passbook` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `amount` int(11) DEFAULT NULL,
+  `val` tinyint(1) DEFAULT NULL,
+  `mode` varchar(20) DEFAULT NULL,
+  `activity` varchar(20) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  PRIMARY KEY (`pid`),
+  KEY `FK_users` (`uid`),
+  CONSTRAINT `FK_users` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=387 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `passbook_owe`
+--
+
+DROP TABLE IF EXISTS `passbook_owe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `passbook_owe` (
+  `oid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `amount` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`oid`),
+  KEY `FK_users_o` (`uid`),
+  CONSTRAINT `FK_users_o` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `queries`
+--
+
+DROP TABLE IF EXISTS `queries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `queries` (
+  `qid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `query` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`qid`),
+  KEY `FK_users_q` (`uid`),
+  CONSTRAINT `FK_users_q` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `users`
 --
 
@@ -39,6 +99,7 @@ CREATE TABLE `users` (
   `owe_out` int(11) DEFAULT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `users`
@@ -49,68 +110,6 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'sidaartha','Sidaartha Reddy','Male',NULL,'$5$rounds=535000$VMclsrxhIVsJygbC$ctpg2AkmuZ.UGdaimbx5v7lklF2TSz4R2YSNp.eQKT4','sidaarthareddy1998@gmail.com','9002981555',200,4040,3,0,0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `passbook`
---
-
-DROP TABLE IF EXISTS `passbook`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `passbook` (
-  `pid` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `amount` int(11) DEFAULT NULL,
-  `val` tinyint(1) DEFAULT NULL,
-  `mode` varchar(20) DEFAULT NULL,
-  `activity` varchar(20) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL,
-  PRIMARY KEY (`pid`),
-  KEY `FK_users` (`uid`),
-  CONSTRAINT `FK_users` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `passbook_owe`
---
-
-DROP TABLE IF EXISTS `passbook_owe`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `passbook_owe` (
-  `oid` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `amount` int(11) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`oid`),
-  KEY `FK_users_o` (`uid`),
-  CONSTRAINT `FK_users_o` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `queries`
---
-
-DROP TABLE IF EXISTS `queries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `queries` (
-  `qid` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `query` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`qid`),
-  KEY `FK_users_q` (`uid`),
-  CONSTRAINT `FK_users_q` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -121,4 +120,4 @@ CREATE TABLE `queries` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-31  3:37:25
+-- Dump completed on 2019-03-17  1:58:03

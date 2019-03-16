@@ -19,13 +19,3 @@ def connection():
 #     c = conn.cursor()
 
 #     return c, conn
-
-
-# def connection():
-#     conn = MySQLdb.connect(	host="sql12.freemysqlhosting.net", 	# your host, usually localhost
-#                      		user="sql12253990", 		# your username
-#                      		passwd="hWcveisvbL", 		# your password
-#                      		db="sql12253990" ) 		# name of the data base
-#     c = conn.cursor()
-
-#     return c, conn
