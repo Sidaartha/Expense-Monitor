@@ -10,6 +10,16 @@ def connection():
 
     return c, conn
 
+# mysql --user=root -p
+# def connection():
+#     conn = MySQLdb.connect(	host="localhost", 	# your host, usually localhost
+#                      		user="root", 		# your username
+#                      		passwd="root", 		# your password
+#                      		db="test" ) 		# name of the data base
+#     c = conn.cursor()
+
+#     return c, conn
+
 
 # def connection():
 #     conn = MySQLdb.connect(	host="sql12.freemysqlhosting.net", 	# your host, usually localhost
