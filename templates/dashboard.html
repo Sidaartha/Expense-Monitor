@@ -17,7 +17,7 @@
               <option value="paytm">Paytm</option>
               <option value="amazon">Amazon</option>
             </select>
-            <input type="text" class="form-control" placeholder="&nbsp;&nbsp;&nbsp;&#8377;0.00" name="bills" value="{{ request.form.bills }}" style=" width: 80px; border-color: #ddd; border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-weight: 300; font-size: 15px; padding: 5px; height: 30px;" required>
+            <input type="number" min="0" class="form-control" placeholder="&nbsp;&nbsp;&nbsp;&#8377;0.00" name="bills" value="{{ request.form.bills }}" style=" width: 80px; border-color: #ddd; border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-weight: 300; font-size: 15px; padding: 5px; height: 30px;" required>
             <input type="text" class="form-control" placeholder="&nbsp;&nbsp;&nbsp;description" name="bills_dis" value="{{ request.form.bills_dis }}" style=" width: 80px; border-color: #ddd; border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-weight: 300; font-size: 15px; padding: 5px; height: 30px; width: 100px;" required>
             <input class="btn btn-warning" type="submit" name="bills" value="Add" style="border-color: #eea236; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 15px; padding: 5px; padding-top: 4px; height: 30px; font-weight: 300;">
           </form>
@@ -62,7 +62,7 @@
             <button class='btn btn-warning' data-toggle="collapse" data-target="#demo0" style=" padding:0; color: white; text-decoration: none; cursor: pointer; border-radius: 20px; width: 17px; height: 17px; font-size: 10px; font-weight: bold; margin-top: -3px;"><span class="glyphicon glyphicon-plus" style="padding-left: 2px; padding-bottom:2px;" ></span></button>
             <div id="demo0" class="collapse" style="margin-top: 10px;">
               <form action="" class="form-inline" method="post">
-                <input type="text" class="form-control" placeholder="Add" name="cash" value="{{ request.form.cash }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
+                <input type="number" class="form-control" placeholder="Add" name="cash" value="{{ request.form.cash }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
                 <input class="btn btn-warning" type="submit" name="cash" value="Add" style="width: 30px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
               </form>
             </div>
@@ -73,7 +73,7 @@
             <button class='btn btn-warning' data-toggle="collapse" data-target="#demo1" style=" padding:0; color: white; text-decoration: none; cursor: pointer; border-radius: 20px; width: 17px; height: 17px; font-size: 10px; font-weight: bold; margin-top: -3px;"><span class="glyphicon glyphicon-plus" style="padding-left: 2px; padding-bottom:2px;" ></span></button>
             <div id="demo1" class="collapse" style="margin-top: 10px;">
               <form action="" class="form-inline" method="post">
-                <input type="text" class="form-control" placeholder="Add" name="bank" value="{{ request.form.bank }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
+                <input type="number" class="form-control" placeholder="Add" name="bank" value="{{ request.form.bank }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
                 <input class="btn btn-warning" type="submit" name="bank" value="Add" style="width: 30px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
               </form>
             </div>
@@ -84,7 +84,7 @@
             <button class='btn btn-warning' data-toggle="collapse" data-target="#demo2" style=" padding:0; color: white; text-decoration: none; cursor: pointer; border-radius: 20px; width: 17px; height: 17px; font-size: 10px; font-weight: bold; margin-top: -3px;"><span class="glyphicon glyphicon-plus" style="padding-left: 2px; padding-bottom:2px;" ></span></button>
             <div id="demo2" class="collapse" style="margin-top: 10px;">
               <form action="" class="form-inline" method="post">
-                <input type="text" class="form-control" placeholder="Add" name="paytm" value="{{ request.form.paytm }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
+                <input type="number" class="form-control" placeholder="Add" name="paytm" value="{{ request.form.paytm }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
                 <input class="btn btn-warning" type="submit" name="paytm" value="Add" style="width: 30px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
               </form>
             </div>
@@ -95,7 +95,7 @@
             <button class='btn btn-warning' data-toggle="collapse" data-target="#demo3" style=" padding:0; color: white; text-decoration: none; cursor: pointer; border-radius: 20px; width: 17px; height: 17px; font-size: 10px; font-weight: bold; margin-top: -3px;"><span class="glyphicon glyphicon-plus" style="padding-left: 2px; padding-bottom:2px;" ></span></button>
             <div id="demo3" class="collapse" style="margin-top: 10px;">
               <form action="" class="form-inline" method="post">
-                <input type="text" class="form-control" placeholder="Add" name="amazon" value="{{ request.form.amazon }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
+                <input type="number" class="form-control" placeholder="Add" name="amazon" value="{{ request.form.amazon }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
                 <input class="btn btn-warning" type="submit" name="amazon" value="Add" style="width: 30px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
               </form>
             </div>
@@ -247,7 +247,7 @@
           <div style="margin-top: 5px; margin-bottom: 20px;"><h3 class="col-xs-6" style="padding-left: 7px;">Passbook</h3>
             <div class="col-xs-6" align="right" style="margin-top: 19px; padding-right: 0px;">
               <form action="" class="form-inline" method="post">
-                <input type="text" class="form-control" placeholder="100" name="filter" value="{{ request.form.filter }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 40px;" required >
+                <input type="number" min="0" class="form-control" placeholder="100" name="filter" value="{{ request.form.filter }}" style="width: 60px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 60px;" required >
                 <button class="btn btn-default " type="submit" name="filter" value="Filter" style="width: 30px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;"><span class="glyphicon glyphicon-filter"></span></button>
               </form>
             </div>
@@ -287,8 +287,9 @@
                   <option value="bank">Bank</option>
                   <option value="paytm">Paytm</option>
                   <option value="amazon">Amazon</option>
+                  <option value="old">None</option>
                 </select>
-                <input type="text" class="form-control wid_1_in" placeholder="₹0.00" name="owe_in_amount" value="{{ request.form.owe_in_amount }}" style="border-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 60px;" required >
+                <input type="number" min="0" class="form-control wid_1_in" placeholder="₹0.00" name="owe_in_amount" value="{{ request.form.owe_in_amount }}" style="border-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 60px;" required >
                 <input type="text" class="form-control wid_2_in" placeholder="Owed by" name="owe_in_person" value="{{ request.form.owe_in_person }}" style="border-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 90px;" required >
                 <button class="btn btn-warning wid_3_in" type="submit" name="owe_in" value="owe_in" style="width: 30px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">Add</button>
               </form>
@@ -316,6 +317,7 @@
                       <option value="bank">Bank</option>
                       <option value="paytm">Paytm</option>
                       <option value="amazon">Amazon</option>
+                      <option value="old">None</option>
                     </select>
                     <button class=" btn btn-default " style="color: #efad4e; height: 10px; font-size: 9px; padding-right: 12px; padding-bottom: 18px; border-radius: 30px; border-color: #efad4e; border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-color: #e6e6e6;" type="submit" name = "owe_in_del" value="{{ row[3] }}">Settle Up</button>
                   </form></td>
@@ -338,8 +340,9 @@
                   <option value="bank">Bank</option>
                   <option value="paytm">Paytm</option>
                   <option value="amazon">Amazon</option>
+                  <option value="old">None</option>
                 </select>
-                <input type="text" class="form-control" placeholder="₹0.00" name="owe_out_amount" value="{{ request.form.owe_out_amount }}" style="width: 60px; border-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 60px;" required >
+                <input type="number" min="0" class="form-control" placeholder="₹0.00" name="owe_out_amount" value="{{ request.form.owe_out_amount }}" style="width: 60px; border-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 60px;" required >
                 <input type="text" class="form-control" placeholder="Owed by" name="owe_out_person" value="{{ request.form.owe_out_person }}" style="width: 60px; border-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; padding-left: 10px; height: 25px; width: 90px;" required >
                 <button class="btn btn-danger " type="submit" name="owe_out" value="owe_out" style="width: 30px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">Add</button>
               </form>
@@ -367,6 +370,7 @@
                       <option value="bank">Bank</option>
                       <option value="paytm">Paytm</option>
                       <option value="amazon">Amazon</option>
+                      <option value="old">None</option>
                     </select>
                     <button class=" btn btn-default " style="color: #d9534e; height: 10px; font-size: 9px; padding-right: 12px; padding-bottom: 18px; border-radius: 30px; border-color: #d9534e; border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-color: #e6e6e6;" type="submit" name = "owe_out_del" value="{{ row[3] }}">Settle Up</button>
                   </form></td>

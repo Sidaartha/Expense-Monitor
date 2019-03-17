@@ -1,6 +1,7 @@
 import MySQLdb
 
 # mysql --user=root -p
+
 def connection():
     conn = MySQLdb.connect(	host="db4free.net", 	# your host, usually localhost
                      		user="exepenseadmin", 		# your username
@@ -10,7 +11,7 @@ def connection():
 
     return c, conn
 
-# # mysql --user=root -p
+
 # def connection():
 #     conn = MySQLdb.connect(	host="localhost", 	# your host, usually localhost
 #                      		user="root", 		# your username

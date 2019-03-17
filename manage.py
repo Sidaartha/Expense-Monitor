@@ -257,8 +257,11 @@ def dashboard():
 					if i[0] > 0 : owe_in_val = owe_in_val + i[0]
 					else: pass
 				c.execute("""UPDATE users SET owe_out = %s, owe_in = %s WHERE username = %s""",(owe_out_val, owe_in_val, thwart(session.get('username'))))
-				cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' - %s WHERE username = %s'
-				c.execute(cmd_users, (amount_val, thwart(session.get('username'))))
+				print(wallet_type, type(wallet_type))
+				if wallet_type != 'old':
+					cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' - %s WHERE username = %s'
+					c.execute(cmd_users, (amount_val, thwart(session.get('username'))))
+				else: pass
 				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Person', person_name.capitalize(), wallets[4]))
 			elif 'owe_out' in request.form:
 				_, amount_val = val_validator(request.form['owe_out_amount'])
@@ -279,8 +282,10 @@ def dashboard():
 					if i[0] > 0 : owe_in_val = owe_in_val + i[0]
 					else: pass
 				c.execute("""UPDATE users SET owe_out = %s, owe_in = %s WHERE username = %s""",(owe_out_val, owe_in_val, thwart(session.get('username'))))
-				cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' + %s WHERE username = %s'
-				c.execute(cmd_users, (amount_val, thwart(session.get('username'))))
+				if wallet_type != 'old':
+					cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' + %s WHERE username = %s'
+					c.execute(cmd_users, (amount_val, thwart(session.get('username'))))
+				else: pass
 				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), amount_val, value, 'Person', person_name.capitalize(), wallets[5]))
 			elif 'owe_in_del' in request.form:
 				del_am = request.form['owe_in_del']
@@ -293,8 +298,10 @@ def dashboard():
 				c.execute("""UPDATE passbook_owe SET amount = 0 WHERE oid = %s""",(del_am,))
 				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), am_to_del, value, 'Person', person_name.capitalize(), wallets[4]))
 				c.execute("UPDATE users SET owe_in = owe_in - %s WHERE username = %s", (am_to_del, thwart(session.get('username'))))
-				cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' + %s WHERE username = %s'
-				c.execute(cmd_users, (am_to_del, thwart(session.get('username'))))
+				if wallet_type != 'old':
+					cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' + %s WHERE username = %s'
+					c.execute(cmd_users, (am_to_del, thwart(session.get('username'))))
+				else: pass
 			elif 'owe_out_del' in request.form:
 				del_am = request.form['owe_out_del']
 				wallet_type = request.form.get('comp_select_out_del')
@@ -306,8 +313,10 @@ def dashboard():
 				c.execute("""UPDATE passbook_owe SET amount = 0 WHERE oid = %s""",(del_am,))
 				c.execute("INSERT INTO passbook (uid, amount, val, mode, activity, total) VALUES (%s, %s, %s, %s, %s, %s)",(session.get('uid'), am_to_del, value, 'Person', person_name.capitalize(), wallets[5]))
 				c.execute("UPDATE users SET owe_out = owe_out - %s WHERE username = %s", (am_to_del, thwart(session.get('username'))))
-				cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' - %s WHERE username = %s'
-				c.execute(cmd_users, (am_to_del, thwart(session.get('username'))))
+				if wallet_type != 'old':
+					cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' - %s WHERE username = %s'
+					c.execute(cmd_users, (am_to_del, thwart(session.get('username'))))
+				else: pass
 			else:
 				pass
 			conn.commit()
