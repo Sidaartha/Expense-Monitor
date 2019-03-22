@@ -16,7 +16,7 @@ def connection():
 #     conn = MySQLdb.connect(	host="localhost", 	# your host, usually localhost
 #                      		user="root", 		# your username
 #                      		passwd="root", 		# your password
-#                      		db="test" ) 		# name of the data base
+#                      		db="expensemonitor" ) 		# name of the data base
 #     c = conn.cursor()
 
 #     return c, conn

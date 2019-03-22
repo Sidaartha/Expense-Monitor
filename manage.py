@@ -253,11 +253,10 @@ def dashboard():
 				owe_out_val = 0
 				owe_in_val = 0
 				for i in am_list:
-					if i[0] < 0 : owe_out_val = owe_out_val + int(abs(i[0]))
+					if i[0] < 0 : owe_out_val = owe_out_val + float(abs(i[0]))
 					if i[0] > 0 : owe_in_val = owe_in_val + i[0]
 					else: pass
 				c.execute("""UPDATE users SET owe_out = %s, owe_in = %s WHERE username = %s""",(owe_out_val, owe_in_val, thwart(session.get('username'))))
-				print(wallet_type, type(wallet_type))
 				if wallet_type != 'old':
 					cmd_users = 'UPDATE users SET ' + wallet_type + '=' + wallet_type + ' - %s WHERE username = %s'
 					c.execute(cmd_users, (amount_val, thwart(session.get('username'))))
@@ -278,7 +277,7 @@ def dashboard():
 				owe_out_val = 0
 				owe_in_val = 0
 				for i in am_list:
-					if i[0] < 0 : owe_out_val = owe_out_val + int(abs(i[0]))
+					if i[0] < 0 : owe_out_val = owe_out_val + float(abs(i[0]))
 					if i[0] > 0 : owe_in_val = owe_in_val + i[0]
 					else: pass
 				c.execute("""UPDATE users SET owe_out = %s, owe_in = %s WHERE username = %s""",(owe_out_val, owe_in_val, thwart(session.get('username'))))
@@ -292,7 +291,7 @@ def dashboard():
 				wallet_type = request.form.get('comp_select_in_del')
 				c.execute("SELECT amount, name FROM passbook_owe WHERE oid = %s", (del_am,))
 				an_tup = c.fetchall()
-				am_to_del = int(an_tup[0][0])
+				am_to_del = float(an_tup[0][0])
 				person_name = an_tup[0][1]
 				value = 0
 				c.execute("""UPDATE passbook_owe SET amount = 0 WHERE oid = %s""",(del_am,))
@@ -307,7 +306,7 @@ def dashboard():
 				wallet_type = request.form.get('comp_select_out_del')
 				c.execute("SELECT amount, name FROM passbook_owe WHERE oid = %s", (del_am,))
 				an_tup = c.fetchall()
-				am_to_del = int(str(an_tup[0][0])[1:])
+				am_to_del = float(str(an_tup[0][0])[1:])
 				person_name = an_tup[0][1]
 				value = 1
 				c.execute("""UPDATE passbook_owe SET amount = 0 WHERE oid = %s""",(del_am,))
@@ -544,5 +543,5 @@ def dt(val):
 	return val_n.strftime("%d %b %y")
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0')
+	app.run(debug=True,host='0.0.0.0')
 	# app.run(debug=True,host='192.168.2.1')
