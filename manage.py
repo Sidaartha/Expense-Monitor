@@ -528,6 +528,9 @@ def currency(val):
 @app.template_filter('INR_only')
 def currency(val):
 	return "{:,}/-".format(val)
+@app.template_filter('INR_only_f')
+def currency(val):
+	return "₹{:,}".format(val)
 @app.template_filter('ABS')
 def abs(val):
 	return str(val)[1:]
