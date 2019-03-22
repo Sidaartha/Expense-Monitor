@@ -434,9 +434,8 @@ input:checked + .slider:before {
 
 @media (max-width: 420px) {
   .span-new{
-    margin-top: 10px;
-    /*position: absolute;*/
-    float: left;
+/*    margin-top: 10px;
+    float: left;*/
   }
 }
 
